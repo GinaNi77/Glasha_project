@@ -116,6 +116,20 @@ class Ui_Form(object):
             "background-color: rgb(255, 255, 255);")
         self.pushButton_14.setObjectName("pushButton_14")
         self.verticalLayout_4.addWidget(self.pushButton_14)
+
+        self.pushButton_22 = QtWidgets.QPushButton(self.layoutWidget_3)
+        sizePolicy = QtWidgets.QSizePolicy(
+            QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(
+            self.pushButton_22.sizePolicy().hasHeightForWidth())
+        self.pushButton_22.setSizePolicy(sizePolicy)
+        self.pushButton_22.setStyleSheet(
+            "background-color: rgb(255, 255, 255);")
+        self.pushButton_22.setObjectName("pushButton_22")
+        self.verticalLayout_4.addWidget(self.pushButton_22)
+
         self.pushButton_16 = QtWidgets.QPushButton(self.layoutWidget_3)
         sizePolicy = QtWidgets.QSizePolicy(
             QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
@@ -360,6 +374,7 @@ class Ui_Form(object):
         self.pushButton_13.setText(_translate("Form", "ПРОЦЕДУР"))
         self.pushButton_14.setText(_translate("Form", "ВСЕХ ТАБЛИЦ"))
         self.pushButton_16.setText(_translate("Form", "ТРИГГЕРОВ"))
+        self.pushButton_22.setText(_translate("Form", "ПРЕДСТАВЛЕНИЙ"))
         self.label_2.setText(_translate("Form", "Вывод данных:"))
         self.pushButton_9.setText(_translate("Form", " ИЗ ТАБЛИЦЫ ПРОЕКТЫ"))
         self.pushButton_3.setText(_translate("Form", " ИЗ ТАБЛИЦЫ ЗАКАЗЧИКИ"))

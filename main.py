@@ -26,7 +26,7 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
         self.pushButton_16.clicked.connect(self.trigger_add)
         self.pushButton_13.clicked.connect(self.procedure_add)
         self.pushButton_14.clicked.connect(self.table_add)
-        # self.pushButton_18.clicked.connect(self.view_add)
+        self.pushButton_22.clicked.connect(self.view_add)
 
     
     def projectlist(self):
@@ -81,9 +81,9 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
         self.table_add = TableCreator()
         self.table_add.create_table()
     
-    # def view_add(self):
-    #     self.view_add = ViewCreator()
-    #     self.view_add.create_view()
+    def view_add(self):
+        self.view_add = ViewCreator()
+        self.view_add.create_view()
 
 
 class ProjectList(QtWidgets.QMainWindow, projects.Ui_MainWindow):
@@ -465,20 +465,20 @@ class TableCreator:
                 cursor.execute(query2)
                 cursor.execute(query3)
 
-# class ViewCreator:
+class ViewCreator:
         
-#     def create_view(self):
-#         with connect(
-#                 host="localhost",
-#                 user="root",
-#                 password=config.password,
-#                 database=config.database,
-#         ) as connection:
-#             # query = view_add.CustomerView
-#             query1= view_add.EmployeeView
-#             with connection.cursor() as cursor:
-#                 # cursor.execute(query)
-#                 cursor.execute(query1)
+    def create_view(self):
+        with connect(
+                host="localhost",
+                user="root",
+                password=config.password,
+                database=config.database,
+        ) as connection:
+            query = view_add.CustomerView
+            # query1= view_add.EmployeeView
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                # cursor.execute(query1)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
