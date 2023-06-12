@@ -4,7 +4,7 @@ from PyQt5.Qt import Qt
 from getpass import getpass
 from mysql.connector import connect, Error
 from PyQt5.QtWidgets import QDialog, QApplication
-import menu, projects, config, customers, departments, employees, employee_add, project_add, customer_projects, customer_add
+import menu, projects, config, customers, departments, employees, employee_add, project_add, customer_projects, customer_add, triggers_add
 from datetime import datetime
 
 class Main(QtWidgets.QMainWindow, menu.Ui_Form):
@@ -23,6 +23,7 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
         self.pushButton_20.clicked.connect(self.project_add)
         self.pushButton_17.clicked.connect(self.customerprojectlist)
         self.pushButton_21.clicked.connect(self.customer_add)
+        self.pushButton_16.clicked.connect(self.trigger_add)
     
     def projectlist(self):
         self.projectlist = ProjectList()
@@ -63,6 +64,11 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
         self.project_add = ProjectAdd()
         self.project_add.show()
         self.hide()
+
+    def trigger_add(self):
+        self.trigger_add = TriggerCreator()
+        self.trigger_add.create_trigger()
+
 
 class ProjectList(QtWidgets.QMainWindow, projects.Ui_MainWindow):
     def __init__(self):
@@ -391,6 +397,21 @@ class CustomerAdd(QtWidgets.QMainWindow, customer_add.Ui_MainWindow):
                 self.lineEdit_3.setText("")
                 self.lineEdit.setText("")
                 self.lineEdit_5.setText("")
+      
+class TriggerCreator:
+        
+    def create_trigger(self):
+        with connect(
+                host="localhost",
+                user="root",
+                password=config.password,
+                database=config.database,
+        ) as connection:
+            query = triggers_add.EmployeeSalaryUpdateTrigger
+            query1= triggers_add.EmployeeInsertTrigger
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                cursor.execute(query1)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
