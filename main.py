@@ -4,7 +4,7 @@ from PyQt5.Qt import Qt
 from getpass import getpass
 from mysql.connector import connect, Error
 from PyQt5.QtWidgets import QDialog, QApplication
-import menu, projects, config, customers, departments, employees, employee_add, project_add, customer_projects, customer_add, triggers_add
+import menu, projects, config, customers, departments, employees, employee_add, project_add, customer_projects, customer_add, triggers_add, procedure_add, tables_add, view_add
 from datetime import datetime
 
 class Main(QtWidgets.QMainWindow, menu.Ui_Form):
@@ -24,6 +24,10 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
         self.pushButton_17.clicked.connect(self.customerprojectlist)
         self.pushButton_21.clicked.connect(self.customer_add)
         self.pushButton_16.clicked.connect(self.trigger_add)
+        self.pushButton_13.clicked.connect(self.procedure_add)
+        self.pushButton_14.clicked.connect(self.table_add)
+        # self.pushButton_18.clicked.connect(self.view_add)
+
     
     def projectlist(self):
         self.projectlist = ProjectList()
@@ -68,6 +72,18 @@ class Main(QtWidgets.QMainWindow, menu.Ui_Form):
     def trigger_add(self):
         self.trigger_add = TriggerCreator()
         self.trigger_add.create_trigger()
+
+    def procedure_add(self):
+        self.procedure_add = ProcedureCreator()
+        self.procedure_add.create_procedure()
+    
+    def table_add(self):
+        self.table_add = TableCreator()
+        self.table_add.create_table()
+    
+    # def view_add(self):
+    #     self.view_add = ViewCreator()
+    #     self.view_add.create_view()
 
 
 class ProjectList(QtWidgets.QMainWindow, projects.Ui_MainWindow):
@@ -409,9 +425,60 @@ class TriggerCreator:
         ) as connection:
             query = triggers_add.EmployeeSalaryUpdateTrigger
             query1= triggers_add.EmployeeInsertTrigger
+            query2= triggers_add.DepartmentDeleteTrigger
             with connection.cursor() as cursor:
                 cursor.execute(query)
                 cursor.execute(query1)
+                cursor.execute(query2)
+
+class ProcedureCreator:
+        
+    def create_procedure(self):
+        with connect(
+                host="localhost",
+                user="root",
+                password=config.password,
+                database=config.database,
+        ) as connection:
+            query = procedure_add.CREATEPROCEDURE1
+            query1= procedure_add.CREATEPROCEDURE2
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                cursor.execute(query1)
+
+class TableCreator:
+        
+    def create_table(self):
+        with connect(
+                host="localhost",
+                user="root",
+                password=config.password,
+                database=config.database,
+        ) as connection:
+            query = tables_add.CustomerCreate
+            query1= tables_add.DepartmentCreate
+            query2 = tables_add.EmployeeCreate
+            query3= tables_add.ProjectCreate
+            with connection.cursor() as cursor:
+                cursor.execute(query)
+                cursor.execute(query1)
+                cursor.execute(query2)
+                cursor.execute(query3)
+
+# class ViewCreator:
+        
+#     def create_view(self):
+#         with connect(
+#                 host="localhost",
+#                 user="root",
+#                 password=config.password,
+#                 database=config.database,
+#         ) as connection:
+#             # query = view_add.CustomerView
+#             query1= view_add.EmployeeView
+#             with connection.cursor() as cursor:
+#                 # cursor.execute(query)
+#                 cursor.execute(query1)
 
 def main():
     app = QtWidgets.QApplication(sys.argv)
